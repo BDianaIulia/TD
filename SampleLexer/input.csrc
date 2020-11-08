@@ -1,9 +1,18 @@
-if( banana = 7 )
-/*
-int int int
-*/
+int banana;
 
-< <= void
+int function(int banana)
+{
+	int c;
+	while( c == 10)
+	{
+	}
 
-...
-hello;
+	if(c == 10)
+	{
+	}
+	else
+	{
+	}
+
+	return;
+}

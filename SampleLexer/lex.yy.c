@@ -481,7 +481,7 @@ char *yytext;
 #line 1 "cminus.lex"
 #line 2 "cminus.lex"
 #include <stdio.h>
-#include "cminus.h"
+#include "cminus.tab.h"
 
 void comment();
 void warning();

@@ -1,0 +1,1272 @@
+Terminals unused in grammar
+
+    MOD
+    ASSIGN
+
+
+State 39 conflicts: 1 shift/reduce
+State 51 conflicts: 1 shift/reduce
+State 52 conflicts: 1 shift/reduce
+State 98 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: declaration_list
+
+    2 declaration_list: declaration declaration_list
+    3                 | declaration
+
+    4 selection_stmt: expression
+    5               | if_stmt
+
+    6 if_stmt: IF LEFT_PRNTS expression RIGHT_PRNTS statement
+    7        | IF LEFT_PRNTS expression RIGHT_PRNTS statement ELSE statement
+
+    8 iteration_stmt: WHILE LEFT_PRNTS expression RIGHT_PRNTS statement
+
+    9 declaration: var_declaration
+   10            | fun_declaration
+
+   11 var_declaration: type_specifier ID SEMICOLON
+   12                | type_specifier ID LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON
+
+   13 type_specifier: INT
+   14               | VOID
+
+   15 fun_declaration: type_specifier ID LEFT_PRNTS params RIGHT_PRNTS compound_stmt
+
+   16 params: params_list
+   17       | VOID
+
+   18 params_list: params_list COMMA param
+   19            | param
+
+   20 param: type_specifier ID
+   21      | type_specifier ID LEFT_BRACKET RIGHT_BRACKET
+
+   22 compound_stmt: LEFT_BRACE local_declarations statement_list RIGHT_BRACE
+
+   23 local_declarations: %empty
+   24                   | local_declarations var_declaration
+
+   25 statement_list: %empty
+   26               | statement_list statement
+
+   27 statement: expression_stmt
+   28          | compound_stmt
+   29          | selection_stmt
+   30          | iteration_stmt
+   31          | return_stmt
+
+   32 expression_stmt: expression SEMICOLON
+   33                | SEMICOLON
+
+   34 return_stmt: RETURN SEMICOLON
+   35            | RETURN expression SEMICOLON
+
+   36 expression: var EQUAL expression
+   37           | simple_expression
+
+   38 var: ID
+   39    | ID LEFT_BRACKET expression RIGHT_BRACKET
+
+   40 simple_expression: additive_expression relop additive_expression
+   41                  | additive_expression
+
+   42 relop: LESS_OR_EQUAL
+   43      | LESS
+   44      | GREATER
+   45      | GREATER_OR_EQUAL
+   46      | EQUAL
+   47      | NOT_EQUAL
+
+   48 additive_expression: additive_expression addop term
+   49                    | term
+
+   50 addop: ADD
+   51      | SUBSTRACT
+
+   52 term: term mulop factor
+   53     | factor
+
+   54 mulop: MULTIPLY
+   55      | DIVIDE
+
+   56 factor: LEFT_PRNTS expression RIGHT_PRNTS
+   57       | var
+   58       | call
+   59       | NUM
+
+   60 call: ID LEFT_PRNTS args RIGHT_PRNTS
+
+   61 args: %empty
+   62     | args_list
+
+   63 args_list: args_list COMMA expression
+   64          | expression
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    IF (258) 6 7
+    ELSE (259) 7
+    RETURN (260) 34 35
+    INT (261) 13
+    VOID (262) 14 17
+    WHILE (263) 8
+    ID (264) 11 12 15 20 21 38 39 60
+    NUM (265) 12 59
+    LESS_OR_EQUAL (266) 42
+    GREATER_OR_EQUAL (267) 45
+    EQUAL (268) 36 46
+    NOT_EQUAL (269) 47
+    LEFT_PRNTS (270) 6 7 8 15 56 60
+    RIGHT_PRNTS (271) 6 7 8 15 56 60
+    LEFT_BRACKET (272) 12 21 39
+    RIGHT_BRACKET (273) 12 21 39
+    LEFT_BRACE (274) 22
+    RIGHT_BRACE (275) 22
+    ADD (276) 50
+    SUBSTRACT (277) 51
+    MULTIPLY (278) 54
+    DIVIDE (279) 55
+    MOD (280)
+    LESS (281) 43
+    GREATER (282) 44
+    ASSIGN (283)
+    SEMICOLON (284) 11 12 32 33 34 35
+    COMMA (285) 18 63
+
+
+Nonterminals, with rules where they appear
+
+    $accept (31)
+        on left: 0
+    program (32)
+        on left: 1
+        on right: 0
+    declaration_list (33)
+        on left: 2 3
+        on right: 1 2
+    selection_stmt (34)
+        on left: 4 5
+        on right: 29
+    if_stmt (35)
+        on left: 6 7
+        on right: 5
+    iteration_stmt (36)
+        on left: 8
+        on right: 30
+    declaration (37)
+        on left: 9 10
+        on right: 2 3
+    var_declaration (38)
+        on left: 11 12
+        on right: 9 24
+    type_specifier (39)
+        on left: 13 14
+        on right: 11 12 15 20 21
+    fun_declaration (40)
+        on left: 15
+        on right: 10
+    params (41)
+        on left: 16 17
+        on right: 15
+    params_list (42)
+        on left: 18 19
+        on right: 16 18
+    param (43)
+        on left: 20 21
+        on right: 18 19
+    compound_stmt (44)
+        on left: 22
+        on right: 15 28
+    local_declarations (45)
+        on left: 23 24
+        on right: 22 24
+    statement_list (46)
+        on left: 25 26
+        on right: 22 26
+    statement (47)
+        on left: 27 28 29 30 31
+        on right: 6 7 8 26
+    expression_stmt (48)
+        on left: 32 33
+        on right: 27
+    return_stmt (49)
+        on left: 34 35
+        on right: 31
+    expression (50)
+        on left: 36 37
+        on right: 4 6 7 8 32 35 36 39 56 63 64
+    var (51)
+        on left: 38 39
+        on right: 36 57
+    simple_expression (52)
+        on left: 40 41
+        on right: 37
+    relop (53)
+        on left: 42 43 44 45 46 47
+        on right: 40
+    additive_expression (54)
+        on left: 48 49
+        on right: 40 41 48
+    addop (55)
+        on left: 50 51
+        on right: 48
+    term (56)
+        on left: 52 53
+        on right: 48 49 52
+    mulop (57)
+        on left: 54 55
+        on right: 52
+    factor (58)
+        on left: 56 57 58 59
+        on right: 52 53
+    call (59)
+        on left: 60
+        on right: 58
+    args (60)
+        on left: 61 62
+        on right: 60
+    args_list (61)
+        on left: 63 64
+        on right: 62 63
+
+
+State 0
+
+    0 $accept: . program $end
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    program           go to state 3
+    declaration_list  go to state 4
+    declaration       go to state 5
+    var_declaration   go to state 6
+    type_specifier    go to state 7
+    fun_declaration   go to state 8
+
+
+State 1
+
+   13 type_specifier: INT .
+
+    $default  reduce using rule 13 (type_specifier)
+
+
+State 2
+
+   14 type_specifier: VOID .
+
+    $default  reduce using rule 14 (type_specifier)
+
+
+State 3
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 9
+
+
+State 4
+
+    1 program: declaration_list .
+
+    $default  reduce using rule 1 (program)
+
+
+State 5
+
+    2 declaration_list: declaration . declaration_list
+    3                 | declaration .
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    $default  reduce using rule 3 (declaration_list)
+
+    declaration_list  go to state 10
+    declaration       go to state 5
+    var_declaration   go to state 6
+    type_specifier    go to state 7
+    fun_declaration   go to state 8
+
+
+State 6
+
+    9 declaration: var_declaration .
+
+    $default  reduce using rule 9 (declaration)
+
+
+State 7
+
+   11 var_declaration: type_specifier . ID SEMICOLON
+   12                | type_specifier . ID LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON
+   15 fun_declaration: type_specifier . ID LEFT_PRNTS params RIGHT_PRNTS compound_stmt
+
+    ID  shift, and go to state 11
+
+
+State 8
+
+   10 declaration: fun_declaration .
+
+    $default  reduce using rule 10 (declaration)
+
+
+State 9
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 10
+
+    2 declaration_list: declaration declaration_list .
+
+    $default  reduce using rule 2 (declaration_list)
+
+
+State 11
+
+   11 var_declaration: type_specifier ID . SEMICOLON
+   12                | type_specifier ID . LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON
+   15 fun_declaration: type_specifier ID . LEFT_PRNTS params RIGHT_PRNTS compound_stmt
+
+    LEFT_PRNTS    shift, and go to state 12
+    LEFT_BRACKET  shift, and go to state 13
+    SEMICOLON     shift, and go to state 14
+
+
+State 12
+
+   15 fun_declaration: type_specifier ID LEFT_PRNTS . params RIGHT_PRNTS compound_stmt
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 15
+
+    type_specifier  go to state 16
+    params          go to state 17
+    params_list     go to state 18
+    param           go to state 19
+
+
+State 13
+
+   12 var_declaration: type_specifier ID LEFT_BRACKET . NUM RIGHT_BRACKET SEMICOLON
+
+    NUM  shift, and go to state 20
+
+
+State 14
+
+   11 var_declaration: type_specifier ID SEMICOLON .
+
+    $default  reduce using rule 11 (var_declaration)
+
+
+State 15
+
+   14 type_specifier: VOID .
+   17 params: VOID .
+
+    RIGHT_PRNTS  reduce using rule 17 (params)
+    $default     reduce using rule 14 (type_specifier)
+
+
+State 16
+
+   20 param: type_specifier . ID
+   21      | type_specifier . ID LEFT_BRACKET RIGHT_BRACKET
+
+    ID  shift, and go to state 21
+
+
+State 17
+
+   15 fun_declaration: type_specifier ID LEFT_PRNTS params . RIGHT_PRNTS compound_stmt
+
+    RIGHT_PRNTS  shift, and go to state 22
+
+
+State 18
+
+   16 params: params_list .
+   18 params_list: params_list . COMMA param
+
+    COMMA  shift, and go to state 23
+
+    $default  reduce using rule 16 (params)
+
+
+State 19
+
+   19 params_list: param .
+
+    $default  reduce using rule 19 (params_list)
+
+
+State 20
+
+   12 var_declaration: type_specifier ID LEFT_BRACKET NUM . RIGHT_BRACKET SEMICOLON
+
+    RIGHT_BRACKET  shift, and go to state 24
+
+
+State 21
+
+   20 param: type_specifier ID .
+   21      | type_specifier ID . LEFT_BRACKET RIGHT_BRACKET
+
+    LEFT_BRACKET  shift, and go to state 25
+
+    $default  reduce using rule 20 (param)
+
+
+State 22
+
+   15 fun_declaration: type_specifier ID LEFT_PRNTS params RIGHT_PRNTS . compound_stmt
+
+    LEFT_BRACE  shift, and go to state 26
+
+    compound_stmt  go to state 27
+
+
+State 23
+
+   18 params_list: params_list COMMA . param
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    type_specifier  go to state 16
+    param           go to state 28
+
+
+State 24
+
+   12 var_declaration: type_specifier ID LEFT_BRACKET NUM RIGHT_BRACKET . SEMICOLON
+
+    SEMICOLON  shift, and go to state 29
+
+
+State 25
+
+   21 param: type_specifier ID LEFT_BRACKET . RIGHT_BRACKET
+
+    RIGHT_BRACKET  shift, and go to state 30
+
+
+State 26
+
+   22 compound_stmt: LEFT_BRACE . local_declarations statement_list RIGHT_BRACE
+
+    $default  reduce using rule 23 (local_declarations)
+
+    local_declarations  go to state 31
+
+
+State 27
+
+   15 fun_declaration: type_specifier ID LEFT_PRNTS params RIGHT_PRNTS compound_stmt .
+
+    $default  reduce using rule 15 (fun_declaration)
+
+
+State 28
+
+   18 params_list: params_list COMMA param .
+
+    $default  reduce using rule 18 (params_list)
+
+
+State 29
+
+   12 var_declaration: type_specifier ID LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON .
+
+    $default  reduce using rule 12 (var_declaration)
+
+
+State 30
+
+   21 param: type_specifier ID LEFT_BRACKET RIGHT_BRACKET .
+
+    $default  reduce using rule 21 (param)
+
+
+State 31
+
+   22 compound_stmt: LEFT_BRACE local_declarations . statement_list RIGHT_BRACE
+   24 local_declarations: local_declarations . var_declaration
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    $default  reduce using rule 25 (statement_list)
+
+    var_declaration  go to state 32
+    type_specifier   go to state 33
+    statement_list   go to state 34
+
+
+State 32
+
+   24 local_declarations: local_declarations var_declaration .
+
+    $default  reduce using rule 24 (local_declarations)
+
+
+State 33
+
+   11 var_declaration: type_specifier . ID SEMICOLON
+   12                | type_specifier . ID LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON
+
+    ID  shift, and go to state 35
+
+
+State 34
+
+   22 compound_stmt: LEFT_BRACE local_declarations statement_list . RIGHT_BRACE
+   26 statement_list: statement_list . statement
+
+    IF           shift, and go to state 36
+    RETURN       shift, and go to state 37
+    WHILE        shift, and go to state 38
+    ID           shift, and go to state 39
+    NUM          shift, and go to state 40
+    LEFT_PRNTS   shift, and go to state 41
+    LEFT_BRACE   shift, and go to state 26
+    RIGHT_BRACE  shift, and go to state 42
+    SEMICOLON    shift, and go to state 43
+
+    selection_stmt       go to state 44
+    if_stmt              go to state 45
+    iteration_stmt       go to state 46
+    compound_stmt        go to state 47
+    statement            go to state 48
+    expression_stmt      go to state 49
+    return_stmt          go to state 50
+    expression           go to state 51
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 35
+
+   11 var_declaration: type_specifier ID . SEMICOLON
+   12                | type_specifier ID . LEFT_BRACKET NUM RIGHT_BRACKET SEMICOLON
+
+    LEFT_BRACKET  shift, and go to state 13
+    SEMICOLON     shift, and go to state 14
+
+
+State 36
+
+    6 if_stmt: IF . LEFT_PRNTS expression RIGHT_PRNTS statement
+    7        | IF . LEFT_PRNTS expression RIGHT_PRNTS statement ELSE statement
+
+    LEFT_PRNTS  shift, and go to state 58
+
+
+State 37
+
+   34 return_stmt: RETURN . SEMICOLON
+   35            | RETURN . expression SEMICOLON
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+    SEMICOLON   shift, and go to state 59
+
+    expression           go to state 60
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 38
+
+    8 iteration_stmt: WHILE . LEFT_PRNTS expression RIGHT_PRNTS statement
+
+    LEFT_PRNTS  shift, and go to state 61
+
+
+State 39
+
+   38 var: ID .
+   39    | ID . LEFT_BRACKET expression RIGHT_BRACKET
+   60 call: ID . LEFT_PRNTS args RIGHT_PRNTS
+
+    LEFT_PRNTS    shift, and go to state 62
+    LEFT_BRACKET  shift, and go to state 63
+
+    LEFT_PRNTS  [reduce using rule 38 (var)]
+    $default    reduce using rule 38 (var)
+
+
+State 40
+
+   59 factor: NUM .
+
+    $default  reduce using rule 59 (factor)
+
+
+State 41
+
+   56 factor: LEFT_PRNTS . expression RIGHT_PRNTS
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 64
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 42
+
+   22 compound_stmt: LEFT_BRACE local_declarations statement_list RIGHT_BRACE .
+
+    $default  reduce using rule 22 (compound_stmt)
+
+
+State 43
+
+   33 expression_stmt: SEMICOLON .
+
+    $default  reduce using rule 33 (expression_stmt)
+
+
+State 44
+
+   29 statement: selection_stmt .
+
+    $default  reduce using rule 29 (statement)
+
+
+State 45
+
+    5 selection_stmt: if_stmt .
+
+    $default  reduce using rule 5 (selection_stmt)
+
+
+State 46
+
+   30 statement: iteration_stmt .
+
+    $default  reduce using rule 30 (statement)
+
+
+State 47
+
+   28 statement: compound_stmt .
+
+    $default  reduce using rule 28 (statement)
+
+
+State 48
+
+   26 statement_list: statement_list statement .
+
+    $default  reduce using rule 26 (statement_list)
+
+
+State 49
+
+   27 statement: expression_stmt .
+
+    $default  reduce using rule 27 (statement)
+
+
+State 50
+
+   31 statement: return_stmt .
+
+    $default  reduce using rule 31 (statement)
+
+
+State 51
+
+    4 selection_stmt: expression .
+   32 expression_stmt: expression . SEMICOLON
+
+    SEMICOLON  shift, and go to state 65
+
+    SEMICOLON  [reduce using rule 4 (selection_stmt)]
+    $default   reduce using rule 4 (selection_stmt)
+
+
+State 52
+
+   36 expression: var . EQUAL expression
+   57 factor: var .
+
+    EQUAL  shift, and go to state 66
+
+    EQUAL     [reduce using rule 57 (factor)]
+    $default  reduce using rule 57 (factor)
+
+
+State 53
+
+   37 expression: simple_expression .
+
+    $default  reduce using rule 37 (expression)
+
+
+State 54
+
+   40 simple_expression: additive_expression . relop additive_expression
+   41                  | additive_expression .
+   48 additive_expression: additive_expression . addop term
+
+    LESS_OR_EQUAL     shift, and go to state 67
+    GREATER_OR_EQUAL  shift, and go to state 68
+    EQUAL             shift, and go to state 69
+    NOT_EQUAL         shift, and go to state 70
+    ADD               shift, and go to state 71
+    SUBSTRACT         shift, and go to state 72
+    LESS              shift, and go to state 73
+    GREATER           shift, and go to state 74
+
+    $default  reduce using rule 41 (simple_expression)
+
+    relop  go to state 75
+    addop  go to state 76
+
+
+State 55
+
+   49 additive_expression: term .
+   52 term: term . mulop factor
+
+    MULTIPLY  shift, and go to state 77
+    DIVIDE    shift, and go to state 78
+
+    $default  reduce using rule 49 (additive_expression)
+
+    mulop  go to state 79
+
+
+State 56
+
+   53 term: factor .
+
+    $default  reduce using rule 53 (term)
+
+
+State 57
+
+   58 factor: call .
+
+    $default  reduce using rule 58 (factor)
+
+
+State 58
+
+    6 if_stmt: IF LEFT_PRNTS . expression RIGHT_PRNTS statement
+    7        | IF LEFT_PRNTS . expression RIGHT_PRNTS statement ELSE statement
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 80
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 59
+
+   34 return_stmt: RETURN SEMICOLON .
+
+    $default  reduce using rule 34 (return_stmt)
+
+
+State 60
+
+   35 return_stmt: RETURN expression . SEMICOLON
+
+    SEMICOLON  shift, and go to state 81
+
+
+State 61
+
+    8 iteration_stmt: WHILE LEFT_PRNTS . expression RIGHT_PRNTS statement
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 82
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 62
+
+   60 call: ID LEFT_PRNTS . args RIGHT_PRNTS
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    $default  reduce using rule 61 (args)
+
+    expression           go to state 83
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+    args                 go to state 84
+    args_list            go to state 85
+
+
+State 63
+
+   39 var: ID LEFT_BRACKET . expression RIGHT_BRACKET
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 86
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 64
+
+   56 factor: LEFT_PRNTS expression . RIGHT_PRNTS
+
+    RIGHT_PRNTS  shift, and go to state 87
+
+
+State 65
+
+   32 expression_stmt: expression SEMICOLON .
+
+    $default  reduce using rule 32 (expression_stmt)
+
+
+State 66
+
+   36 expression: var EQUAL . expression
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 88
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 67
+
+   42 relop: LESS_OR_EQUAL .
+
+    $default  reduce using rule 42 (relop)
+
+
+State 68
+
+   45 relop: GREATER_OR_EQUAL .
+
+    $default  reduce using rule 45 (relop)
+
+
+State 69
+
+   46 relop: EQUAL .
+
+    $default  reduce using rule 46 (relop)
+
+
+State 70
+
+   47 relop: NOT_EQUAL .
+
+    $default  reduce using rule 47 (relop)
+
+
+State 71
+
+   50 addop: ADD .
+
+    $default  reduce using rule 50 (addop)
+
+
+State 72
+
+   51 addop: SUBSTRACT .
+
+    $default  reduce using rule 51 (addop)
+
+
+State 73
+
+   43 relop: LESS .
+
+    $default  reduce using rule 43 (relop)
+
+
+State 74
+
+   44 relop: GREATER .
+
+    $default  reduce using rule 44 (relop)
+
+
+State 75
+
+   40 simple_expression: additive_expression relop . additive_expression
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    var                  go to state 89
+    additive_expression  go to state 90
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 76
+
+   48 additive_expression: additive_expression addop . term
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    var     go to state 89
+    term    go to state 91
+    factor  go to state 56
+    call    go to state 57
+
+
+State 77
+
+   54 mulop: MULTIPLY .
+
+    $default  reduce using rule 54 (mulop)
+
+
+State 78
+
+   55 mulop: DIVIDE .
+
+    $default  reduce using rule 55 (mulop)
+
+
+State 79
+
+   52 term: term mulop . factor
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    var     go to state 89
+    factor  go to state 92
+    call    go to state 57
+
+
+State 80
+
+    6 if_stmt: IF LEFT_PRNTS expression . RIGHT_PRNTS statement
+    7        | IF LEFT_PRNTS expression . RIGHT_PRNTS statement ELSE statement
+
+    RIGHT_PRNTS  shift, and go to state 93
+
+
+State 81
+
+   35 return_stmt: RETURN expression SEMICOLON .
+
+    $default  reduce using rule 35 (return_stmt)
+
+
+State 82
+
+    8 iteration_stmt: WHILE LEFT_PRNTS expression . RIGHT_PRNTS statement
+
+    RIGHT_PRNTS  shift, and go to state 94
+
+
+State 83
+
+   64 args_list: expression .
+
+    $default  reduce using rule 64 (args_list)
+
+
+State 84
+
+   60 call: ID LEFT_PRNTS args . RIGHT_PRNTS
+
+    RIGHT_PRNTS  shift, and go to state 95
+
+
+State 85
+
+   62 args: args_list .
+   63 args_list: args_list . COMMA expression
+
+    COMMA  shift, and go to state 96
+
+    $default  reduce using rule 62 (args)
+
+
+State 86
+
+   39 var: ID LEFT_BRACKET expression . RIGHT_BRACKET
+
+    RIGHT_BRACKET  shift, and go to state 97
+
+
+State 87
+
+   56 factor: LEFT_PRNTS expression RIGHT_PRNTS .
+
+    $default  reduce using rule 56 (factor)
+
+
+State 88
+
+   36 expression: var EQUAL expression .
+
+    $default  reduce using rule 36 (expression)
+
+
+State 89
+
+   57 factor: var .
+
+    $default  reduce using rule 57 (factor)
+
+
+State 90
+
+   40 simple_expression: additive_expression relop additive_expression .
+   48 additive_expression: additive_expression . addop term
+
+    ADD        shift, and go to state 71
+    SUBSTRACT  shift, and go to state 72
+
+    $default  reduce using rule 40 (simple_expression)
+
+    addop  go to state 76
+
+
+State 91
+
+   48 additive_expression: additive_expression addop term .
+   52 term: term . mulop factor
+
+    MULTIPLY  shift, and go to state 77
+    DIVIDE    shift, and go to state 78
+
+    $default  reduce using rule 48 (additive_expression)
+
+    mulop  go to state 79
+
+
+State 92
+
+   52 term: term mulop factor .
+
+    $default  reduce using rule 52 (term)
+
+
+State 93
+
+    6 if_stmt: IF LEFT_PRNTS expression RIGHT_PRNTS . statement
+    7        | IF LEFT_PRNTS expression RIGHT_PRNTS . statement ELSE statement
+
+    IF          shift, and go to state 36
+    RETURN      shift, and go to state 37
+    WHILE       shift, and go to state 38
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+    LEFT_BRACE  shift, and go to state 26
+    SEMICOLON   shift, and go to state 43
+
+    selection_stmt       go to state 44
+    if_stmt              go to state 45
+    iteration_stmt       go to state 46
+    compound_stmt        go to state 47
+    statement            go to state 98
+    expression_stmt      go to state 49
+    return_stmt          go to state 50
+    expression           go to state 51
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 94
+
+    8 iteration_stmt: WHILE LEFT_PRNTS expression RIGHT_PRNTS . statement
+
+    IF          shift, and go to state 36
+    RETURN      shift, and go to state 37
+    WHILE       shift, and go to state 38
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+    LEFT_BRACE  shift, and go to state 26
+    SEMICOLON   shift, and go to state 43
+
+    selection_stmt       go to state 44
+    if_stmt              go to state 45
+    iteration_stmt       go to state 46
+    compound_stmt        go to state 47
+    statement            go to state 99
+    expression_stmt      go to state 49
+    return_stmt          go to state 50
+    expression           go to state 51
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 95
+
+   60 call: ID LEFT_PRNTS args RIGHT_PRNTS .
+
+    $default  reduce using rule 60 (call)
+
+
+State 96
+
+   63 args_list: args_list COMMA . expression
+
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+
+    expression           go to state 100
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 97
+
+   39 var: ID LEFT_BRACKET expression RIGHT_BRACKET .
+
+    $default  reduce using rule 39 (var)
+
+
+State 98
+
+    6 if_stmt: IF LEFT_PRNTS expression RIGHT_PRNTS statement .
+    7        | IF LEFT_PRNTS expression RIGHT_PRNTS statement . ELSE statement
+
+    ELSE  shift, and go to state 101
+
+    ELSE      [reduce using rule 6 (if_stmt)]
+    $default  reduce using rule 6 (if_stmt)
+
+
+State 99
+
+    8 iteration_stmt: WHILE LEFT_PRNTS expression RIGHT_PRNTS statement .
+
+    $default  reduce using rule 8 (iteration_stmt)
+
+
+State 100
+
+   63 args_list: args_list COMMA expression .
+
+    $default  reduce using rule 63 (args_list)
+
+
+State 101
+
+    7 if_stmt: IF LEFT_PRNTS expression RIGHT_PRNTS statement ELSE . statement
+
+    IF          shift, and go to state 36
+    RETURN      shift, and go to state 37
+    WHILE       shift, and go to state 38
+    ID          shift, and go to state 39
+    NUM         shift, and go to state 40
+    LEFT_PRNTS  shift, and go to state 41
+    LEFT_BRACE  shift, and go to state 26
+    SEMICOLON   shift, and go to state 43
+
+    selection_stmt       go to state 44
+    if_stmt              go to state 45
+    iteration_stmt       go to state 46
+    compound_stmt        go to state 47
+    statement            go to state 102
+    expression_stmt      go to state 49
+    return_stmt          go to state 50
+    expression           go to state 51
+    var                  go to state 52
+    simple_expression    go to state 53
+    additive_expression  go to state 54
+    term                 go to state 55
+    factor               go to state 56
+    call                 go to state 57
+
+
+State 102
+
+    7 if_stmt: IF LEFT_PRNTS expression RIGHT_PRNTS statement ELSE statement .
+
+    $default  reduce using rule 7 (if_stmt)

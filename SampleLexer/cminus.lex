@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "cminus.h"
+#include "cminus.tab.h"
 
 void comment();
 void warning();
