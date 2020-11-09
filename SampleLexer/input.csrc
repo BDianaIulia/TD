@@ -1,18 +1,16 @@
-int banana;
-
-int function(int banana)
+int gcd ( int u, int v )
 {
-	int c;
-	while( c == 10)
-	{
-	}
-
-	if(c == 10)
-	{
-	}
-	else
-	{
-	}
-
-	return;
+ if ( v == 0 )
+ return u ;
+ else
+ return gcd (v, u-u/v*v) ;
 }
+
+void main(void)
+{
+ int x;
+ int y;
+ x = input();
+ y = input();
+ output (gcd(x,y));
+ }

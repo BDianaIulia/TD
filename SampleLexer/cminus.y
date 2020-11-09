@@ -105,7 +105,7 @@ return_stmt : RETURN SEMICOLON
 			| RETURN expression SEMICOLON
 			;
 			
-expression : var EQUAL expression 
+expression : var ASSIGN expression 
 		   | simple_expression 
 		   ;
 		   
