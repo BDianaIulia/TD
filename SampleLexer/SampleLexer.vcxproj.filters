@@ -21,9 +21,21 @@
     <ClCompile Include="lex.yy.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AST.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cminus.tab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cminus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cminus.tab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,6 +44,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="input.csrc">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cminus.y">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

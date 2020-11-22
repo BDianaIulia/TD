@@ -151,14 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AST.c" />
+    <ClCompile Include="cminus.tab.c" />
     <ClCompile Include="lex.yy.c" />
     <ClCompile Include="SampleLexer.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AST.h" />
     <ClInclude Include="cminus.h" />
+    <ClInclude Include="cminus.tab.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cminus.lex" />
+    <None Include="cminus.y" />
     <None Include="input.csrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

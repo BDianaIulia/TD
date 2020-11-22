@@ -481,12 +481,13 @@ char *yytext;
 #line 1 "cminus.lex"
 #line 2 "cminus.lex"
 #include <stdio.h>
-#include "cminus.h"
+#include "AST.h"
+#include "cminus.tab.h"
 
 void comment();
 void warning();
-#line 488 "lex.yy.c"
 #line 489 "lex.yy.c"
+#line 490 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -703,9 +704,9 @@ YY_DECL
 		}
 
 	{
-#line 9 "cminus.lex"
+#line 10 "cminus.lex"
 
-#line 708 "lex.yy.c"
+#line 709 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -764,166 +765,166 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "cminus.lex"
+#line 11 "cminus.lex"
 {comment();}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "cminus.lex"
+#line 13 "cminus.lex"
 {return ELSE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 13 "cminus.lex"
+#line 14 "cminus.lex"
 {return IF;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "cminus.lex"
+#line 15 "cminus.lex"
 {return INT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 15 "cminus.lex"
+#line 16 "cminus.lex"
 {return RETURN;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 16 "cminus.lex"
+#line 17 "cminus.lex"
 {return VOID;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 17 "cminus.lex"
+#line 18 "cminus.lex"
 {return WHILE;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "cminus.lex"
-{return ID;}
+#line 20 "cminus.lex"
+{yylval.name = strdup(yytext); return ID;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "cminus.lex"
-{return NUM;}
+#line 21 "cminus.lex"
+{yylval.value = atoi(yytext); return NUM;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "cminus.lex"
+#line 23 "cminus.lex"
 {return LESS_OR_EQUAL;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "cminus.lex"
+#line 24 "cminus.lex"
 {return GREATER_OR_EQUAL;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "cminus.lex"
+#line 25 "cminus.lex"
 {return EQUAL;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "cminus.lex"
+#line 26 "cminus.lex"
 {return NOT_EQUAL;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 27 "cminus.lex"
+#line 28 "cminus.lex"
 {return LEFT_PRNTS;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "cminus.lex"
+#line 29 "cminus.lex"
 {return RIGHT_PRNTS;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 29 "cminus.lex"
+#line 30 "cminus.lex"
 {return LEFT_BRACKET;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 30 "cminus.lex"
+#line 31 "cminus.lex"
 {return RIGHT_BRACKET;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 31 "cminus.lex"
+#line 32 "cminus.lex"
 {return LEFT_BRACE;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 32 "cminus.lex"
+#line 33 "cminus.lex"
 {return RIGHT_BRACE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 33 "cminus.lex"
+#line 34 "cminus.lex"
 {return ADD;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 34 "cminus.lex"
+#line 35 "cminus.lex"
 {return SUBSTRACT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "cminus.lex"
+#line 36 "cminus.lex"
 {return MULTIPLY;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 36 "cminus.lex"
+#line 37 "cminus.lex"
 {return DIVIDE;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 37 "cminus.lex"
+#line 38 "cminus.lex"
 {return MOD;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 38 "cminus.lex"
+#line 39 "cminus.lex"
 {return LESS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 39 "cminus.lex"
+#line 40 "cminus.lex"
 {return GREATER;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 40 "cminus.lex"
+#line 41 "cminus.lex"
 {return ASSIGN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 41 "cminus.lex"
+#line 42 "cminus.lex"
 {return SEMICOLON;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 42 "cminus.lex"
+#line 43 "cminus.lex"
 {return COMMA;}
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 44 "cminus.lex"
+#line 45 "cminus.lex"
 
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "cminus.lex"
+#line 47 "cminus.lex"
 {warning();}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "cminus.lex"
+#line 49 "cminus.lex"
 ECHO;
 	YY_BREAK
-#line 926 "lex.yy.c"
+#line 927 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1928,7 +1929,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 48 "cminus.lex"
+#line 49 "cminus.lex"
 
 
 int yywrap(void)

@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
-#include "cminus.h"
+#include "AST.h"
+#include "cminus.tab.h"
 
 void comment();
 void warning();
@@ -16,8 +17,8 @@ void warning();
 "void" 		{return VOID;}
 "while" 	{return WHILE;}
 
-[a-zA-Z][a-zA-Z0-9_]* 	{return ID;}
-[0-9]+					{return NUM;}
+[a-zA-Z][a-zA-Z0-9_]* 	{yylval.name = strdup(yytext); return ID;}
+[0-9]+					{yylval.value = atoi(yytext); return NUM;}
 
 "<="		{return LESS_OR_EQUAL;}
 ">="		{return GREATER_OR_EQUAL;}
