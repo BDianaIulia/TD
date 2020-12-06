@@ -70,7 +70,9 @@ extern int yylex(void);
 %type <node> factor
 %type <node> call
 %type <node> args 
-%type <node> arg_list
+%type <node> args_list
+
+%type <node> relop addop mulop
 
 %start program
 %% 
@@ -89,7 +91,7 @@ selection_stmt : IF LEFT_PRNTS expression RIGHT_PRNTS statement							{ $$ = cre
 			   | IF LEFT_PRNTS expression RIGHT_PRNTS statement ELSE statement			{ $$ = createIfStatement($3, $5, $7);}
 			   ;
 			   
-iteration_stmt : WHILE LEFT_PRNTS expression RIGHT_PRNTS statement 
+iteration_stmt : WHILE LEFT_PRNTS expression RIGHT_PRNTS statement			{$$ = createWhileStatement($3);}
 				;
 				
 declaration : var_declaration			{$$ = createDeclarationNode($1);}
@@ -125,14 +127,14 @@ param : type_specifier ID									{ $$ = createVarDeclaration($1, $2, 0);}
 compound_stmt : LEFT_BRACE local_declarations statement_list RIGHT_BRACE		{$$ = createCompoundStatement($2, $3);}
 			  ;
 
-local_declarations : 
+local_declarations :													{$$ = NULL;}
 				   |local_declarations var_declaration					{
 																			$$ = $1;
 																			addLinkToList($$, $2); 
 																		}	
 				   ;
 				   
-statement_list :														
+statement_list :														{$$ = NULL;}
 			   | statement_list statement								{
 																			$$ = $1;
 																			addLinkToList($$, $2);
@@ -162,53 +164,53 @@ expression : var ASSIGN expression			{
 		   | simple_expression				{$$ = createExpressionNode($1);}
 		   ;
 		   
-var : ID 
-	| ID LEFT_BRACKET expression RIGHT_BRACKET 
+var : ID											{$$ = createVarNode($1, NULL);}
+	| ID LEFT_BRACKET expression RIGHT_BRACKET		{$$ = createVarNode($1, $3);}
 	;
 	
-simple_expression : additive_expression relop additive_expression
-				  | additive_expression
+simple_expression : additive_expression relop additive_expression		{$$ = createSimpleExpresion($1,$2,$3);}
+				  | additive_expression									{$$ = $1;}
 				  ;
 				
-relop : LESS_OR_EQUAL 
-	  | LESS 
-	  | GREATER 
-	  | GREATER_OR_EQUAL 
-	  | EQUAL 
-	  | NOT_EQUAL 
+relop : LESS_OR_EQUAL				{$$ = LESS_OR_EQUAL;}
+	  | LESS						{$$ = LESS;}
+	  | GREATER						{$$ = GREATER;}
+	  | GREATER_OR_EQUAL			{$$ = GREATER_OR_EQUAL;}
+	  | EQUAL						{$$ = EQUAL;}
+	  | NOT_EQUAL					{$$ = NOT_EQUAL;}
 	  ;
 
-additive_expression : additive_expression addop term 
-					| term
+additive_expression : additive_expression addop term				{$$ = createAdditiveExpression($1,$2,$3);}
+					| term											{$$ = $1;}
 					;
 					
-addop : ADD 
-	  | SUBSTRACT 
+addop : ADD							{$$ = ADD;}
+	  | SUBSTRACT					{$$ = SUBSTRACT;}
 	  ;
 	  
-term : term mulop factor
-	 | factor
+term : term mulop factor			{$$ = createTerm($1,$2,$3);}
+	 | factor						{$$ = $1;}
 	 ;
 	 
-mulop : MULTIPLY
-	  | DIVIDE
+mulop : MULTIPLY					{$$ = MULTIPLY;}
+	  | DIVIDE						{$$ = DIVIDE;}
 	  ;
 	  
-factor : LEFT_PRNTS expression RIGHT_PRNTS
-	   | var
-	   | call 
-	   | NUM 
+factor : LEFT_PRNTS expression RIGHT_PRNTS			{$$ = $2;}
+	   | var										{$$ = $1;}
+	   | call										{$$ = $1;}
+	   | NUM										{$$ = createNumNode($1);}
 	   ;
 	   
-call : ID LEFT_PRNTS args RIGHT_PRNTS 
+call : ID LEFT_PRNTS args RIGHT_PRNTS				{$$ = createCall($1, $3);}
 	 ;
 	 
-args :
-	 | args_list 
+args :								{$$ = NULL;}	
+	 | args_list					{$$ = $1;}
 	 ;
 	 
-args_list : args_list COMMA expression
-		  | expression
+args_list : args_list COMMA expression				{$$ = createArgumentList($1, $3);}
+		  | expression								{$$ = $1;}
 		  ;
 	  
 %%

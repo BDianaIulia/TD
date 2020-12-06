@@ -81,6 +81,13 @@ ASTNode* createIfStatement(ASTNode* expression, ASTNode* thenStatement, ASTNode*
 	return retNode;
 }
 
+ASTNode* createWhileStatement(ASTNode* expression)
+{
+	ASTNode* retNode = createDefaultNode("WhileStatement", 3);
+	retNode->links[0] = expression;
+	return retNode;
+}
+
 ASTNode* createFunctionDeclarationNode(ASTNode* typeSpecifier, const char* functionName, ASTNode* params, ASTNode* compoundStatement)
 {
 	ASTNode* retNode = createDefaultNode("FunctionDefinition", 3);
@@ -164,6 +171,92 @@ ASTNode* createParametersDeclarationNode(ASTNode* parametersDeclaration)
 	return retNode;
 }
 
+ASTNode* createVarNode(const char* varName, ASTNode* expression)
+{
+	ASTNode* retNode = createDefaultNode("Variable", 1);
+	if (retNode)
+	{
+		sprintf(retNode->extraData, "%s", varName);
+		retNode->links[0] = expression;
+	}
+	return retNode;
+}
+
+ASTNode* createSimpleExpresion(ASTNode* additiveExpression, ASTNode* relop, ASTNode* additiveExpression2)
+{
+	ASTNode* retNode = createDefaultNode("SimpleExpresion", 3);
+
+	if (retNode)
+	{
+		retNode->links[0] = additiveExpression;
+		retNode->links[1] = relop;
+		retNode->links[2] = additiveExpression2;
+	}
+
+	return retNode;
+}
+
+ASTNode* createAdditiveExpression(ASTNode* additiveExpression, ASTNode* addop, ASTNode* term)
+{
+	ASTNode* retNode = createDefaultNode("AdditiveExpression", 3);
+
+	if (retNode)
+	{
+		retNode->links[0] = additiveExpression;
+		retNode->links[1] = addop;
+		retNode->links[2] = term;
+	}
+
+	return retNode;
+}
+
+ASTNode* createTerm(ASTNode* term, ASTNode* mulop, ASTNode* factor)
+{
+	ASTNode* retNode = createDefaultNode("Term", 3);
+
+	if (retNode)
+	{
+		retNode->links[0] = term;
+		retNode->links[1] = mulop;
+		retNode->links[2] = factor;
+	}
+
+	return retNode;
+}
+
+ASTNode* createNumNode(int value)
+{
+	ASTNode* retNode = createDefaultNode("Number", 0);
+	sprintf(retNode->extraData, "%s", value);
+	return retNode;
+}
+
+ASTNode* createCall(const char* varName, ASTNode* args)
+{
+	ASTNode* retNode = createDefaultNode("Call", 1);
+
+	if (retNode)
+	{
+		retNode->links[0] = args;
+		if (varName)
+			sprintf(retNode->extraData, "%s", varName);
+	}
+
+	return retNode;
+}
+
+ASTNode* createArgumentList(ASTNode* argsList, ASTNode* expressions)
+{
+	ASTNode* retNode = createDefaultNode("ArgumentList", 2);
+
+	if (retNode)
+	{
+		retNode->links[0] = argsList;
+		retNode->links[1] = expressions;
+	}
+
+	return retNode;
+}
 
 void printAst(ASTNode* ast, int level)
 {
