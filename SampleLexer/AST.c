@@ -62,6 +62,16 @@ ASTNode* createProgramUnitNode(ASTNode* declaration)
 	return retNode;
 }
 
+ASTNode* createDeclarationList(ASTNode* declarationList)
+{
+	ASTNode* retNode = createDefaultNode("DeclarationList", 1);
+	if (retNode)
+	{
+		retNode->links[0] = declarationList;
+	}
+	return retNode;
+}
+
 ASTNode* createDeclarationNode(ASTNode* varFunDeclaration)
 {
 	ASTNode* retNode = createDefaultNode("Declaration", 1);
@@ -81,10 +91,11 @@ ASTNode* createIfStatement(ASTNode* expression, ASTNode* thenStatement, ASTNode*
 	return retNode;
 }
 
-ASTNode* createWhileStatement(ASTNode* expression)
+ASTNode* createWhileStatement(ASTNode* expression, ASTNode* statement)
 {
-	ASTNode* retNode = createDefaultNode("WhileStatement", 3);
+	ASTNode* retNode = createDefaultNode("WhileStatement", 2);
 	retNode->links[0] = expression;
+	retNode->links[1] = statement;
 	return retNode;
 }
 

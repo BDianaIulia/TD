@@ -536,7 +536,7 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    80,    80,    83,    87,    90,    91,    94,    97,    98,
+       0,    80,    80,    83,    84,    90,    91,    94,    97,    98,
      101,   102,   105,   106,   109,   112,   113,   116,   120,   123,
      124,   127,   130,   131,   137,   138,   144,   145,   146,   147,
      148,   151,   152,   156,   157,   160,   164,   167,   168,   171,
@@ -623,8 +623,8 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,    12,    13,     0,     2,     4,     8,     0,     9,     1,
-       3,     0,     0,     0,    10,    13,     0,     0,    15,    18,
+       0,    12,    13,     0,     2,     3,     8,     0,     9,     1,
+       4,     0,     0,     0,    10,    13,     0,     0,    15,    18,
        0,    19,     0,     0,     0,     0,    22,    14,    17,    11,
       20,    24,    23,     0,     0,     0,     0,     0,     0,    37,
       58,     0,    21,    32,    28,    29,    27,    25,    26,    30,
@@ -715,7 +715,7 @@ static const yytype_int8 yyr1[] =
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     5,     7,     5,     1,     1,
+       0,     2,     1,     1,     2,     5,     7,     5,     1,     1,
        3,     6,     1,     1,     6,     1,     1,     3,     1,     2,
        4,     4,     0,     2,     0,     2,     1,     1,     1,     1,
        1,     2,     1,     2,     3,     3,     1,     1,     4,     3,
@@ -1194,18 +1194,18 @@ yyreduce:
 #line 1195 "cminus.tab.c"
     break;
 
-  case 3: /* declaration_list: declaration declaration_list  */
+  case 3: /* declaration_list: declaration  */
 #line 83 "cminus.y"
-                                                                {
+                                                                                {createDeclarationList((yyvsp[0].node));}
+#line 1201 "cminus.tab.c"
+    break;
+
+  case 4: /* declaration_list: declaration declaration_list  */
+#line 84 "cminus.y"
+                                                                                {
 															addLinkToList((yyval.node), (yyvsp[-1].node));
 															(yyval.node) = (yyvsp[0].node);
 														}
-#line 1204 "cminus.tab.c"
-    break;
-
-  case 4: /* declaration_list: declaration  */
-#line 87 "cminus.y"
-                                                                                {addLinkToList((yyval.node), (yyvsp[0].node));}
 #line 1210 "cminus.tab.c"
     break;
 
@@ -1223,7 +1223,7 @@ yyreduce:
 
   case 7: /* iteration_stmt: WHILE LEFT_PRNTS expression RIGHT_PRNTS statement  */
 #line 94 "cminus.y"
-                                                                                        {(yyval.node) = createWhileStatement((yyvsp[-2].node));}
+                                                                                        {(yyval.node) = createWhileStatement((yyvsp[-2].node), (yyvsp[0].node));}
 #line 1228 "cminus.tab.c"
     break;
 
@@ -1316,7 +1316,7 @@ yyreduce:
 
   case 22: /* local_declarations: %empty  */
 #line 130 "cminus.y"
-                                                                                                                        {(yyval.node) = NULL;}
+                                                                                                                        {(yyval.node) = createListNode("localDeclaration", NULL);}
 #line 1321 "cminus.tab.c"
     break;
 
@@ -1331,7 +1331,7 @@ yyreduce:
 
   case 24: /* statement_list: %empty  */
 #line 137 "cminus.y"
-                                                                                                                                {(yyval.node) = NULL;}
+                                                                                                                                {(yyval.node) = createListNode("StatementList",NULL);}
 #line 1336 "cminus.tab.c"
     break;
 
@@ -1565,13 +1565,13 @@ yyreduce:
 
   case 62: /* args_list: args_list COMMA expression  */
 #line 212 "cminus.y"
-                                                                {(yyval.node) = createArgumentList((yyvsp[-2].node), (yyvsp[0].node));}
+                                                                { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node)); }
 #line 1570 "cminus.tab.c"
     break;
 
   case 63: /* args_list: expression  */
 #line 213 "cminus.y"
-                                                                                        {(yyval.node) = (yyvsp[0].node);}
+                                                                                        { (yyval.node) = createListNode("ArgumentsList", (yyvsp[0].node)); }
 #line 1576 "cminus.tab.c"
     break;
 

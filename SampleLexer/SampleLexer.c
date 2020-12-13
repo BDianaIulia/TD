@@ -56,7 +56,7 @@ int main()
 		printf("Fisierul de intrare nu poate fi deschis. Erorare: %d", errno);
 	}*/
 	//int lexUnit = 0;
-	//yydebug = 0;
+	yydebug = 0;
 	yyin = fopen("input.csrc", "rt");
 	if (yyin != NULL)
 	{

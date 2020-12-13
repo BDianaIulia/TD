@@ -80,18 +80,18 @@ extern int yylex(void);
 program: declaration_list			{astRoot = createProgramUnitNode($1); $$ = astRoot;}
 	   ;
 	   
-declaration_list: declaration declaration_list			{
+declaration_list: declaration							{createDeclarationList($1);}
+				| declaration declaration_list			{
 															addLinkToList($$, $1);
 															$$ = $2;
 														}
-                | declaration							{addLinkToList($$, $1);}
 				;
 				
 selection_stmt : IF LEFT_PRNTS expression RIGHT_PRNTS statement							{ $$ = createIfStatement($3, $5, NULL);}
 			   | IF LEFT_PRNTS expression RIGHT_PRNTS statement ELSE statement			{ $$ = createIfStatement($3, $5, $7);}
 			   ;
 			   
-iteration_stmt : WHILE LEFT_PRNTS expression RIGHT_PRNTS statement			{$$ = createWhileStatement($3);}
+iteration_stmt : WHILE LEFT_PRNTS expression RIGHT_PRNTS statement			{$$ = createWhileStatement($3, $5);}
 				;
 				
 declaration : var_declaration			{$$ = createDeclarationNode($1);}
@@ -127,14 +127,14 @@ param : type_specifier ID									{ $$ = createVarDeclaration($1, $2, 0);}
 compound_stmt : LEFT_BRACE local_declarations statement_list RIGHT_BRACE		{$$ = createCompoundStatement($2, $3);}
 			  ;
 
-local_declarations :													{$$ = NULL;}
+local_declarations :													{$$ = createListNode("localDeclaration", NULL);}
 				   |local_declarations var_declaration					{
 																			$$ = $1;
 																			addLinkToList($$, $2); 
 																		}	
 				   ;
 				   
-statement_list :														{$$ = NULL;}
+statement_list :														{$$ = createListNode("StatementList",NULL);}
 			   | statement_list statement								{
 																			$$ = $1;
 																			addLinkToList($$, $2);
@@ -209,8 +209,8 @@ args :								{$$ = NULL;}
 	 | args_list					{$$ = $1;}
 	 ;
 	 
-args_list : args_list COMMA expression				{$$ = createArgumentList($1, $3);}
-		  | expression								{$$ = $1;}
+args_list : args_list COMMA expression				{ $$ = $1; addLinkToList($$, $3); }
+		  | expression								{ $$ = createListNode("ArgumentsList", $1); }
 		  ;
 	  
 %%
