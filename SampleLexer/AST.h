@@ -1,3 +1,4 @@
+#include "Hash.h"
 #define MAX_NODE_TYPE 50
 #define MAX_EXTRA_DATA 50
 
@@ -7,6 +8,8 @@ typedef struct astNode {
 	char extraData[MAX_EXTRA_DATA];
 	struct astNode** links;
 }ASTNode;
+
+HashTable* symbolsTable;
 
 ASTNode* createDefaultNode(const char* nodeName, unsigned int linksCount);
 ASTNode* resizeNodeLinks(ASTNode* nodeToResize, unsigned int newSize);

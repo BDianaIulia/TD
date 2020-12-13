@@ -1,4 +1,5 @@
 #include "AST.h"
+#include "Hash.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -278,6 +279,35 @@ void printAst(ASTNode* ast, int level)
 		{
 			printf(" ");
 		}
+		if (ast->type)
+		{
+			printf("%s ", ast->type);
+		}
+		if (ast->numLinks)
+		{
+			printf(" - %d - %s\n", ast->numLinks, ast->extraData);
+		}
+		else
+		{
+			printf(" - %s\n", ast->extraData);
+		}
+		for (idx = 0; idx < ast->numLinks; idx++)
+		{
+
+			printAst(ast->links[idx], level + 1);
+		}
+	}
+}
+
+void createSymbolsTable(ASTNode* ast, int level)
+{
+	if (level == 0)
+	{
+		symbolsTable = create_table(1000);
+	}
+	int idx = 0;
+	if (ast)
+	{
 		if (ast->type)
 		{
 			printf("%s ", ast->type);
