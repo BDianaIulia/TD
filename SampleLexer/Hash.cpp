@@ -1,28 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "Hash.h"
 
 #define CAPACITY 50000 // Size of the Hash Table
-
-//The hash function from djb2 algorithm 
-unsigned long hash_function(char* str) {
-	unsigned long hash = 5381;
-	int c;
-
-	while (c = *str++)
-		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-
-	return hash;
-}
-
-typedef struct Ht_item Ht_item;
-// Define the Hash Table Item here
-struct Ht_item {
-	char* key;
-	SymTableEntry* value;
-};
-
 
 typedef struct LinkedList LinkedList;
 // Define the Linkedlist here
@@ -41,6 +19,21 @@ struct HashTable {
 	int count;
 };
 
+// Define the Hash Table Item here
+struct Ht_item {
+	char* key;
+	SymTableEntry* value;
+};
+//The hash function from djb2 algorithm 
+unsigned long hash_function(char* str) {
+	unsigned long hash = 5381;
+	int c;
+
+	while (c = *str++)
+		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+	return hash % 1000;
+}
 
 static LinkedList* allocate_list() {
 	// Allocates memory for a Linkedlist pointer
@@ -134,7 +127,9 @@ Ht_item* create_item(char* key, SymTableEntry* value) {
 	item->key = (char*)malloc(strlen(key) + 1);
 	strcpy(item->key, key);
 
-	item->value = value;
+	item->value = (SymTableEntry*)malloc(sizeof(SymTableEntry));
+	memcpy(item->value, value, sizeof(SymTableEntry));
+	//item->value = value;
 
 	return item;
 }

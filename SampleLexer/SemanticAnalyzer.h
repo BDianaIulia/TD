@@ -1,14 +1,14 @@
 #pragma once
 #define MAX_SYMBOL_NAME 255
 
-typedef enum IdentifierScope { Local = 0, Global };
-typedef enum { TYPE_INTEGER, TYPE_VOID } Type;
+typedef enum { Local = 0, Global } IdentifierScope;
+typedef enum { TypeInteger, TypeVoid } Type;
+typedef enum { Function = 0, VarDeclaration } SymbolType;
 
-typedef struct symTableEntry {
+struct SymTableEntry {
 	char symbolName[MAX_SYMBOL_NAME];
 	Type dataType;
-	int symbolType;
+	SymbolType symbolType; //specifica daca este functie, variabila sau tip de date
 	IdentifierScope symbolScope;
 	char contextName[MAX_SYMBOL_NAME];
-
-}SymTableEntry;
+};

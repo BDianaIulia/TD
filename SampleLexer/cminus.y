@@ -80,10 +80,10 @@ extern int yylex(void);
 program: declaration_list			{astRoot = createProgramUnitNode($1); $$ = astRoot;}
 	   ;
 	   
-declaration_list: declaration							{createDeclarationList($1);}
+declaration_list: declaration							{$$ = createDeclarationList($1);}
 				| declaration declaration_list			{
-															addLinkToList($$, $1);
 															$$ = $2;
+															addLinkToList($$, $1);
 														}
 				;
 				
@@ -172,28 +172,28 @@ simple_expression : additive_expression relop additive_expression		{$$ = createS
 				  | additive_expression									{$$ = $1;}
 				  ;
 				
-relop : LESS_OR_EQUAL				{$$ = LESS_OR_EQUAL;}
-	  | LESS						{$$ = LESS;}
-	  | GREATER						{$$ = GREATER;}
-	  | GREATER_OR_EQUAL			{$$ = GREATER_OR_EQUAL;}
-	  | EQUAL						{$$ = EQUAL;}
-	  | NOT_EQUAL					{$$ = NOT_EQUAL;}
+relop : LESS_OR_EQUAL				{$$ = createDefaultNode("LESS_OR_EQUAL", 0);}
+	  | LESS						{$$ = createDefaultNode("LESS", 0);}
+	  | GREATER						{$$ = createDefaultNode("GREATER", 0);}
+	  | GREATER_OR_EQUAL			{$$ = createDefaultNode("GREATER_OR_EQUAL", 0);}
+	  | EQUAL						{$$ = createDefaultNode("EQUAL", 0);}
+	  | NOT_EQUAL					{$$ = createDefaultNode("NOT_EQUAL", 0);}
 	  ;
 
 additive_expression : additive_expression addop term				{$$ = createAdditiveExpression($1,$2,$3);}
 					| term											{$$ = $1;}
 					;
 					
-addop : ADD							{$$ = ADD;}
-	  | SUBSTRACT					{$$ = SUBSTRACT;}
+addop : ADD							{$$ = createDefaultNode("ADD", 0);}
+	  | SUBSTRACT					{$$ = createDefaultNode("SUBSTRACT", 0);}
 	  ;
 	  
 term : term mulop factor			{$$ = createTerm($1,$2,$3);}
 	 | factor						{$$ = $1;}
 	 ;
 	 
-mulop : MULTIPLY					{$$ = MULTIPLY;}
-	  | DIVIDE						{$$ = DIVIDE;}
+mulop : MULTIPLY					{$$ = createDefaultNode("MULTIPLY", 0);}
+	  | DIVIDE						{$$ = createDefaultNode("DIVIDE", 0);}
 	  ;
 	  
 factor : LEFT_PRNTS expression RIGHT_PRNTS			{$$ = $2;}

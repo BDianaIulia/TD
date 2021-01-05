@@ -1,4 +1,5 @@
 #include "Hash.h"
+#include "SemanticAnalyzer.h"
 #define MAX_NODE_TYPE 50
 #define MAX_EXTRA_DATA 50
 
@@ -37,4 +38,9 @@ ASTNode* createNumNode(int value);
 ASTNode* createCall(const char* varName, ASTNode* args);
 ASTNode* createArgumentList(ASTNode* argsList, ASTNode* expressions);
 
+//HashTable* createSymbolsTable(ASTNode* ast);
+void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName);
+
 void printAst(ASTNode* ast, int level);
+
+struct SymTableEntry buildASymTableEntry(const char *symbolName, Type dataType, SymbolType symbolType, IdentifierScope symbolScope, const char* contextName);

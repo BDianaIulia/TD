@@ -1196,15 +1196,15 @@ yyreduce:
 
   case 3: /* declaration_list: declaration  */
 #line 83 "cminus.y"
-                                                                                {createDeclarationList((yyvsp[0].node));}
+                                                                                {(yyval.node) = createDeclarationList((yyvsp[0].node));}
 #line 1201 "cminus.tab.c"
     break;
 
   case 4: /* declaration_list: declaration declaration_list  */
 #line 84 "cminus.y"
                                                                                 {
-															addLinkToList((yyval.node), (yyvsp[-1].node));
 															(yyval.node) = (yyvsp[0].node);
+															addLinkToList((yyval.node), (yyvsp[-1].node));
 														}
 #line 1210 "cminus.tab.c"
     break;
@@ -1439,37 +1439,37 @@ yyreduce:
 
   case 41: /* relop: LESS_OR_EQUAL  */
 #line 175 "cminus.y"
-                                                {(yyval.node) = LESS_OR_EQUAL;}
+                                                {(yyval.node) = createDefaultNode("LESS_OR_EQUAL", 0);}
 #line 1444 "cminus.tab.c"
     break;
 
   case 42: /* relop: LESS  */
 #line 176 "cminus.y"
-                                                                {(yyval.node) = LESS;}
+                                                                {(yyval.node) = createDefaultNode("LESS", 0);}
 #line 1450 "cminus.tab.c"
     break;
 
   case 43: /* relop: GREATER  */
 #line 177 "cminus.y"
-                                                                {(yyval.node) = GREATER;}
+                                                                {(yyval.node) = createDefaultNode("GREATER", 0);}
 #line 1456 "cminus.tab.c"
     break;
 
   case 44: /* relop: GREATER_OR_EQUAL  */
 #line 178 "cminus.y"
-                                                {(yyval.node) = GREATER_OR_EQUAL;}
+                                                {(yyval.node) = createDefaultNode("GREATER_OR_EQUAL", 0);}
 #line 1462 "cminus.tab.c"
     break;
 
   case 45: /* relop: EQUAL  */
 #line 179 "cminus.y"
-                                                                {(yyval.node) = EQUAL;}
+                                                                {(yyval.node) = createDefaultNode("EQUAL", 0);}
 #line 1468 "cminus.tab.c"
     break;
 
   case 46: /* relop: NOT_EQUAL  */
 #line 180 "cminus.y"
-                                                        {(yyval.node) = NOT_EQUAL;}
+                                                        {(yyval.node) = createDefaultNode("NOT_EQUAL", 0);}
 #line 1474 "cminus.tab.c"
     break;
 
@@ -1487,13 +1487,13 @@ yyreduce:
 
   case 49: /* addop: ADD  */
 #line 187 "cminus.y"
-                                                                {(yyval.node) = ADD;}
+                                                                {(yyval.node) = createDefaultNode("ADD", 0);}
 #line 1492 "cminus.tab.c"
     break;
 
   case 50: /* addop: SUBSTRACT  */
 #line 188 "cminus.y"
-                                                        {(yyval.node) = SUBSTRACT;}
+                                                        {(yyval.node) = createDefaultNode("SUBSTRACT", 0);}
 #line 1498 "cminus.tab.c"
     break;
 
@@ -1511,13 +1511,13 @@ yyreduce:
 
   case 53: /* mulop: MULTIPLY  */
 #line 195 "cminus.y"
-                                                        {(yyval.node) = MULTIPLY;}
+                                                        {(yyval.node) = createDefaultNode("MULTIPLY", 0);}
 #line 1516 "cminus.tab.c"
     break;
 
   case 54: /* mulop: DIVIDE  */
 #line 196 "cminus.y"
-                                                                {(yyval.node) = DIVIDE;}
+                                                                {(yyval.node) = createDefaultNode("DIVIDE", 0);}
 #line 1522 "cminus.tab.c"
     break;
 

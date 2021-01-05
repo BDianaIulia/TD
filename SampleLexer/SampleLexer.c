@@ -78,7 +78,7 @@ int main()
 		default:
 			break;
 		}
-		printAst(astRoot, 0);
+		createSymbolsTable(astRoot);
 		fclose(yyin);
 	}
 	else
