@@ -78,7 +78,7 @@ int main()
 		default:
 			break;
 		}
-		createSymbolsTable(astRoot);
+		HashTable* symbolsTable = createSymbolsTable(astRoot);
 		fclose(yyin);
 	}
 	else

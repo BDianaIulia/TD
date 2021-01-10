@@ -1401,8 +1401,8 @@ yyreduce:
   case 35: /* expression: var ASSIGN expression  */
 #line 160 "cminus.y"
                                                         {
-												addLinkToList((yyval.node), (yyvsp[-2].node));
 												(yyval.node) = (yyvsp[0].node);
+												addLinkToList((yyval.node), (yyvsp[-2].node));
 											}
 #line 1408 "cminus.tab.c"
     break;

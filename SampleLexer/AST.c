@@ -6,6 +6,7 @@
 #include <string.h>
 
 #define CAPACITY 50000 // Size of the Hash Table
+#define GLOBAL "global"
 
 //The hash function from djb2 algorithm 
 unsigned long hash_function(char* str) {
@@ -649,10 +650,18 @@ HashTable* createSymbolsTable(ASTNode* ast)
 {
 	HashTable* symbolsTable = create_table(1000);
 
-	addSymbolsToTable(ast, symbolsTable, "global");
-
+	addSymbolsToTable(ast, symbolsTable, GLOBAL);
 	print_table(symbolsTable);
+
+	buildSemanticAnalyzer(ast, symbolsTable, GLOBAL);
+
 	return symbolsTable;
+}
+
+void computeKey(char* returningKey, char elementName[MAX_EXTRA_DATA], char localContextName[MAX_SYMBOL_NAME])
+{
+	strcpy(returningKey, elementName);
+	strcat(returningKey, localContextName);
 }
 
 void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName)
@@ -670,7 +679,17 @@ void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName)
 				dataType = TypeVoid;
 
 			struct SymTableEntry ste = buildASymTableEntry(node->extraData, dataType, Function, Global, localContextName);
-			ht_insert(table, node->extraData, &ste);
+			char key[2*MAX_EXTRA_DATA];
+			computeKey(key, node->extraData, localContextName);
+			
+			//if is already declared
+			if (ht_search(table, key) != NULL)
+			{
+				printf("\n\n ! The %s is already declared.", !stricmp(node->type, "FunctionDefinition") ? "function" : "variable");
+				printf("\n Identifier %s: redefinition.", node->extraData);
+			}
+			else
+				ht_insert(table, key, &ste);
 
 			sprintf(localContextName, "%s", node->extraData);
 		}
@@ -683,10 +702,21 @@ void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName)
 				dataType = TypeVoid;
 
 			IdentifierScope idenfScope = Global;
-			if (strcmp(localContextName, "global"))
+			if (strcmp(localContextName, GLOBAL))
 				idenfScope = Local;
+
 			struct SymTableEntry ste = buildASymTableEntry(node->extraData, dataType, VarDeclaration, idenfScope, localContextName);
-			ht_insert(table, node->extraData, &ste);
+			char key[2 * MAX_EXTRA_DATA];
+			computeKey(key, node->extraData, localContextName);
+
+			//if is already declared
+			if (ht_search(table, key) != NULL)
+			{
+				printf("\n\n ! The %s is already declared.", !stricmp(node->type, "FunctionDefinition") ? "function" : "variable");
+				printf("\n Identifier %s: redefinition.", node->extraData);
+			}
+			else
+				ht_insert(table, key, &ste);
 		}
 
 		for (int i = 0; i < node->numLinks; i++)
@@ -694,7 +724,80 @@ void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName)
 			addSymbolsToTable(node->links[i], table, localContextName);
 		}
 	}
+}
 
+void buildSemanticAnalyzer(ASTNode* node, HashTable* table, char* contextName)
+{
+	char localContextName[MAX_SYMBOL_NAME];
+	if (node != NULL && table != NULL)
+	{
+		sprintf(localContextName, "%s", contextName);
+		if (!stricmp(node->type, "FunctionDefinition"))
+		{
+			sprintf(localContextName, "%s", node->extraData);
+		}
+		else
+		{
+			checkSemanticAnalyzer(node, table, localContextName);
+		}
+
+		for (int i = 0; i < node->numLinks; i++)
+		{
+			buildSemanticAnalyzer(node->links[i], table, localContextName);
+		}
+	}
+}
+
+int checkSemanticAnalyzer(ASTNode* node, HashTable* table, char* contextName)
+{
+	if (node != NULL)
+	{
+		char localContextName[MAX_SYMBOL_NAME];
+		sprintf(localContextName, "%s", contextName);
+
+		//check if variable is defined
+		if (!stricmp(node->type, "Variable") || !stricmp(node->type, "Call"))
+		{
+			if (!stricmp(node->type, "Call"))
+				sprintf(localContextName, "%s", GLOBAL);
+
+			char key[2 * MAX_EXTRA_DATA];
+			computeKey(key, node->extraData, localContextName);
+
+			if (ht_search(table, key) == NULL)
+			{
+				printf("\n\n ! The %s should be declared.", !stricmp(node->type, "Variable") ? "variable" : "function");
+				printf("\n Identifier %s is undefined.", node->extraData);
+				return 0;
+			}
+		}
+		else if (!stricmp(node->type, "Expression"))
+		{
+			if (node->links != NULL && !stricmp(node->links[0]->type, "Call"))
+			{
+				if (node->numLinks < 2)
+					return 1;
+				char key[2 * MAX_EXTRA_DATA];
+				computeKey(key, node->links[0]->extraData, GLOBAL);
+
+				struct SymTableEntry* element = ht_search(table, key);
+
+				char key2[2 * MAX_EXTRA_DATA];
+				computeKey(key2, node->links[1]->extraData, localContextName);
+
+				struct SymTableEntry* element2 = ht_search(table, key2);
+				if (element != NULL && element2 != NULL)
+				{
+					if (element->dataType != element2->dataType) {
+						printf("\n\n A returning value of %s cannot be used to initialize an entity of type %s.", element->dataType == TypeInteger ? "INT" : "VOID" , element2->dataType == TypeInteger ? "INT" : "VOID");
+						printf("\n Returning value of function %s cannot be assigned to %s", node->links[0]->extraData, node->links[1]->extraData);
+						return 0;
+					}
+				}
+			}
+		}
+	}
+	return 1;
 }
 
 struct SymTableEntry buildASymTableEntry(const char *symbolName, Type dataType, SymbolType symbolType, IdentifierScope symbolScope, const char* contextName)

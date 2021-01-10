@@ -158,8 +158,8 @@ return_stmt : RETURN SEMICOLON					{$$ = createReturnStatement(NULL);}
 			;
 			
 expression : var ASSIGN expression			{
-												addLinkToList($$, $1);
 												$$ = $3;
+												addLinkToList($$, $1);
 											}
 		   | simple_expression				{$$ = createExpressionNode($1);}
 		   ;

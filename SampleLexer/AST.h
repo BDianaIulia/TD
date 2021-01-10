@@ -38,9 +38,14 @@ ASTNode* createNumNode(int value);
 ASTNode* createCall(const char* varName, ASTNode* args);
 ASTNode* createArgumentList(ASTNode* argsList, ASTNode* expressions);
 
-//HashTable* createSymbolsTable(ASTNode* ast);
+
 void addSymbolsToTable(ASTNode* node, HashTable* table, char* contextName);
+void buildSemanticAnalyzer(ASTNode* node, HashTable* table, char* contextName);
 
 void printAst(ASTNode* ast, int level);
 
 struct SymTableEntry buildASymTableEntry(const char *symbolName, Type dataType, SymbolType symbolType, IdentifierScope symbolScope, const char* contextName);
+int checkSemanticAnalyzer(ASTNode* node, HashTable* table, char* contextName);
+void createSemanticAnalyzer(ASTNode* node, HashTable* table, char* contextName);
+
+void computeKey(char* returningKey, char elementName[MAX_EXTRA_DATA], char localContextName[MAX_SYMBOL_NAME]);
